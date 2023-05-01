@@ -1,7 +1,7 @@
 import mysql.connector
 from typing import Tuple
 from datetime import datetime
-from .env import HOST, USERNAME, PASSWORD, DB_NAME
+from src.env import HOST, USERNAME, PASSWORD, DB_NAME
 
 conn = mysql.connector.connect(host=HOST, user=USERNAME, password=PASSWORD, database=DB_NAME)
 
@@ -27,13 +27,13 @@ def create_table():
 
 def seed_db():
     """seed = inserting database with some fake initial data to play around with."""
-    add_user("mary.zonderman", "Mary", "Zonderman", "22/12/1976", "(783) 725-1217", "Mary.Zonderman@gmail.com", "505 Hood Rd #1, Markham, Ontario, L3R 5V6, Canada", "testing!",0)
+    add_user("mary.zonderman", "Mary", "Zonderman", "22/12/1976", "(783) 725-1217", "Mary.Zonderman@gmail.com", "505 Hood Rd #1, Markham, Ontario, L3R 5V6, Canada", "testing!",0 , 12345)
     
 
-def add_user(username: str, first_name: str, last_name: str, birthday: str, phonenumber: str, email: str, address: str, password: str, balance: str):
+def add_user(username: str, first_name: str, last_name: str, birthday: str, phonenumber: str, email: str, address: str, password: str, balance: int,pincode: int):
     """FYI the date format used is dd/mm/yyyy. Feel free to try changing it.
     """
-    sql = f"""INSERT INTO `{DB_NAME}`.`user` (`first_name`, `last_name`, `birthday`, `address`, 'pincode', `balance`,`username` , `password`, `datesignedup`, `phonenumber`, `email`) VALUES ('{username}', '{first_name}', '{last_name}', STR_TO_DATE('{birthday}', '%d/%m/%Y'), STR_TO_DATE('{datetime.now().strftime('%d/%m/%Y')}', '%d/%m/%Y'), '{phonenumber}', '{email}', '{address}', '{password}', {balance});"""
+    sql = f"""INSERT INTO `{DB_NAME}`.`user` (`first_name`, `last_name`, `birthday`, `address`, `balance`, 'pincode', `username` , `password`, `datesignedup`, `phonenumber`, `email`) VALUES ('{first_name}', '{last_name}', STR_TO_DATE('{birthday}', '%d/%m/%Y'), '{address}', {balance}, {pincode}, '{username}', '{password}', STR_TO_DATE('{datetime.now().strftime('%d/%m/%Y')}', '%d/%m/%Y'), '{phonenumber}', '{email}');"""
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()

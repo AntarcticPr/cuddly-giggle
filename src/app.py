@@ -1,6 +1,6 @@
 import tkinter as tk  
 from tkinter import font as tkfont
-from .app_windows import LogIn, Dashboard, AccountBalance, CreateAccount
+from src.app_windows import LogIn, Dashboard, AccountBalance, CreateAccount
 
 
 class App(tk.Tk):
